@@ -24,5 +24,6 @@ def main():
     arr = selection_sort(arr)
     print arr
 
+
 if __name__ == '__main__':
     main()

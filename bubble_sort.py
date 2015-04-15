@@ -21,5 +21,6 @@ def main():
     arr = bubble_sort(arr)
     print arr
 
+
 if __name__ == '__main__':
     main()

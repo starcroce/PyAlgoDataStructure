@@ -37,5 +37,6 @@ def main():
     arr = merge_sort(arr)
     print arr
 
+
 if __name__ == '__main__':
     main()
