@@ -9,12 +9,17 @@ class LinkedList:
 
     def __init__(self, val):
         self.head = ListNode(val)
-        self.tail = self.head
 
-    def add(self, val):
+    def insert_after(self, node, val):
+        next_node = node.next
         new_node = ListNode(val)
-        self.tail.next = new_node
-        self.tail = self.tail.next
+        node.next = new_node
+        new_node.next = next_node
+
+    def remove_after(self, node):
+        to_remove_node = node.next
+        new_next_node = to_remove_node.next
+        node.next = new_next_node
 
 
 def print_linked_list(head):
@@ -22,6 +27,13 @@ def print_linked_list(head):
         print str(head.val) + ' ->',
         head = head.next
     print
+
+
+def get_tail(head):
+    tail = head
+    while tail.next:
+        tail = tail.next
+    return tail
 
 
 def reverse_linked_list(head):
@@ -36,11 +48,13 @@ def reverse_linked_list(head):
 
 
 def main():
-    linked_list = LinkedList(0)
+    list = LinkedList(0)
+    list_tail = get_tail(list.head)
     for i in range(1, 10):
-        linked_list.add(i)
+        list.insert_after(list_tail, i)
+        list_tail = list_tail.next
 
-    head = linked_list.head
+    head = list.head
     print_linked_list(head)
 
     new_head = reverse_linked_list(head)
