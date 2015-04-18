@@ -47,6 +47,22 @@ def reverse_linked_list(head):
     return head
 
 
+def get_nth_to_last_node(head, n):
+    if n <= 0:
+        return None
+
+    fast, slow = head, head
+    for _ in range(n):
+        fast = fast.next
+        if fast is None:
+            return None
+
+    while fast:
+        fast, slow = fast.next, slow.next
+
+    return slow
+
+
 def main():
     list = LinkedList(0)
     list_tail = get_tail(list.head)
@@ -54,11 +70,17 @@ def main():
         list.insert_after(list_tail, i)
         list_tail = list_tail.next
 
-    head = list.head
-    print_linked_list(head)
+    print_linked_list(list.head)
 
-    new_head = reverse_linked_list(head)
-    print_linked_list(new_head)
+    new_head = reverse_linked_list(list.head)
+    list.head = new_head
+    print_linked_list(list.head)
+
+    _5th_to_end = get_nth_to_last_node(new_head, 5)
+    print _5th_to_end.val
+
+    list.remove_after(_5th_to_end)
+    print_linked_list(list.head)
 
 
 if __name__ == '__main__':
