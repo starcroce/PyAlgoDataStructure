@@ -50,6 +50,28 @@ def get_circle_start(list):
     return fast
 
 
+def find_nth_node(list, n):
+    res = list.head
+    for _ in range(n - 1):
+        res = res.next
+        if res is None:
+            return None
+    return res
+
+
+def swap_two_nodes(list, node1, node2):
+    before_node1, before_node2 = list.head, list.head
+    while before_node1.next != node1:
+        before_node1 = before_node1.next
+    while before_node2.next != node2:
+        before_node2 = before_node2.next
+    after_node1, after_node2 = node1.next, node2.next
+    before_node1.next = node2
+    node2.next = after_node1
+    before_node2.next = node1
+    node1.next = after_node2
+
+
 def main():
     # create a new linked list
     list = MySingleLinkedList.LinkedList(0)
@@ -60,6 +82,11 @@ def main():
     list.print_list()
 
     print is_circle(list)
+
+    _3rd_node, _6th_node = find_nth_node(list, 3), find_nth_node(list, 6)
+    print _3rd_node.val, _6th_node.val
+    swap_two_nodes(list, _3rd_node, _6th_node)
+    list.print_list()
 
     # find 5th to the end node and remove it
     _5th_to_end = get_nth_to_last_node(list, 5)
