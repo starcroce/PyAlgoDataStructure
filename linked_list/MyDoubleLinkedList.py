@@ -20,11 +20,19 @@ class LinkedList:
 
     def insert_after(self, node, val):
         next_node = node.next
-        self.insert(node, next_node, val)
+        if next_node is None:
+            node.next = ListNode(val)
+            self.tail = node.next
+        else:
+            self.insert(node, next_node, val)
 
     def insert_before(self, node, val):
         prev_node = node.prev
-        self.insert(prev_node, node, val)
+        if prev_node is None:
+            node.prev = ListNode(val)
+            self.tail = node.prev
+        else:
+            self.insert(prev_node, node, val)
 
     def remove(self, node):
         prev_node, next_node = node.prev, node.next
@@ -34,6 +42,6 @@ class LinkedList:
     def print_list(self):
         curr = self.head
         while curr:
-            print str(curr.val) + ' <->',
+            print '<-' + str(curr.val) + '->',
             curr = curr.next
         print
