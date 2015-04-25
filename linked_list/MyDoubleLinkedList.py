@@ -14,9 +14,10 @@ class LinkedList:
 
     def insert(self, prev_node, next_node, val):
         new_node = ListNode(val)
-        new_node.prev, new_node.next = prev_node, next_node
         prev_node.next = new_node
         next_node.prev = new_node
+        new_node.prev = prev_node
+        new_node.next = next_node
 
     def insert_after(self, node, val):
         next_node = node.next
