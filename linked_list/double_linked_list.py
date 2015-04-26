@@ -26,5 +26,6 @@ def main():
     double_list.remove(_3rd_node)
     double_list.print_list()
 
+
 if __name__ == '__main__':
     main()
