@@ -40,8 +40,21 @@ class LinkedList:
 
     def remove(self, node):
         prev_node, next_node = node.prev, node.next
-        prev_node.next = next_node
-        next_node.prev = prev_node
+
+        # remove the only node
+        if prev_node is None and next_node is None:
+            self.head = self.tail = None
+        # remove head
+        elif prev_node is None:
+            self.head = next_node
+            next_node.prev = None
+        # remove tail
+        elif next_node is None:
+            self.tail = prev_node
+            prev_node.next = None
+        else:
+            prev_node.next = next_node
+            next_node.prev = prev_node
 
     def print_list(self):
         curr = self.head

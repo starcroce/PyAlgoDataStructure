@@ -26,6 +26,10 @@ def main():
     double_list.remove(_3rd_node)
     double_list.print_list()
 
+    double_list.remove(double_list.head)
+    double_list.remove(double_list.tail)
+    double_list.print_list()
+
 
 if __name__ == '__main__':
     main()
