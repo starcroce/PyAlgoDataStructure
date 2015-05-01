@@ -32,6 +32,19 @@ def in_order_traversal_recursive(root):
     return res
 
 
+def in_order_traversal_iterative(root):
+    res, stack = [], []
+    curr = root
+    while len(stack) > 0 or curr:
+        while curr:
+            stack.append(curr)
+            curr = curr.left
+        curr = stack.pop()
+        res.append(curr.val)
+        curr = curr.right
+    return res
+
+
 def pre_order_traversal_recursive(root):
     res = []
     if root is None:
@@ -57,18 +70,22 @@ def main():
     NUMS = [4, 2, 1, 3, 6, 5, 7]
     for i in NUMS:
         my_bst.insert(i)
+    root_node = my_bst.root
 
     level_order = level_order_traversal(my_bst)
-    print level_order
+    print 'level order:', level_order
 
-    in_order_recursive = in_order_traversal_recursive(my_bst.root)
-    print in_order_recursive
-    
-    pre_order_recursive = pre_order_traversal_recursive(my_bst.root)
-    print pre_order_recursive
+    in_order_recursive = in_order_traversal_recursive(root_node)
+    print 'in order recursive:', in_order_recursive
 
-    post_order_recursive = post_order_traversal_recursive(my_bst.root)
-    print post_order_recursive
+    in_order_iterative = in_order_traversal_iterative(root_node)
+    print 'in order iterative:', in_order_iterative
+
+    pre_order_recursive = pre_order_traversal_recursive(root_node)
+    print 'pre order recursive:', pre_order_recursive
+
+    post_order_recursive = post_order_traversal_recursive(root_node)
+    print 'post order recursive:', post_order_recursive
 
 
 if __name__ == '__main__':
