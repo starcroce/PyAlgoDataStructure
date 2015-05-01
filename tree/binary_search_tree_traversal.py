@@ -33,7 +33,7 @@ def in_order_traversal_recursive(root):
 
 
 def in_order_traversal_iterative(root):
-    res, stack = [], []
+    res, stack = [], deque([])
     curr = root
     while len(stack) > 0 or curr:
         while curr:
@@ -55,6 +55,19 @@ def pre_order_traversal_recursive(root):
     return res
 
 
+def pre_order_traversal_iterative(root):
+    res, stack = [], deque([])
+    stack.append(root)
+    while len(stack) > 0:
+        tmp = stack.pop()
+        res.append(tmp.val)
+        if tmp.right:
+            stack.append(tmp.right)
+        if tmp.left:
+            stack.append(tmp.left)
+    return res
+
+
 def post_order_traversal_recursive(root):
     res = []
     if root is None:
@@ -63,6 +76,10 @@ def post_order_traversal_recursive(root):
     res += post_order_traversal_recursive(root.right)
     res.append(root.val)
     return res
+
+
+# def post_order_traversal_iterative(root):
+    
 
 
 def main():
@@ -83,6 +100,9 @@ def main():
 
     pre_order_recursive = pre_order_traversal_recursive(root_node)
     print 'pre order recursive:', pre_order_recursive
+
+    pre_order_iterative = pre_order_traversal_iterative(root_node)
+    print 'pre order iterative:', pre_order_iterative
 
     post_order_recursive = post_order_traversal_recursive(root_node)
     print 'post order recursive:', post_order_recursive
