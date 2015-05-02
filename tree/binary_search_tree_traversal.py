@@ -78,8 +78,25 @@ def post_order_traversal_recursive(root):
     return res
 
 
-# def post_order_traversal_iterative(root):
-    
+def post_order_traversal_iterative(root):
+    res, stack = [], deque([])
+    curr, prev = root, None
+    stack.append(curr)
+    while len(stack) > 0:
+        curr = stack[-1]
+        if prev is None or prev.left == curr or prev.right == curr:
+            if curr.left:
+                stack.append(curr.left)
+            elif curr.right:
+                stack.append(curr.right)
+        elif curr.left == prev:
+            if curr.right:
+                stack.append(curr.right)
+        else:
+            stack.pop()
+            res.append(curr.val)
+        prev = curr
+    return res
 
 
 def main():
@@ -106,6 +123,9 @@ def main():
 
     post_order_recursive = post_order_traversal_recursive(root_node)
     print 'post order recursive:', post_order_recursive
+
+    post_order_iterative = post_order_traversal_iterative(root_node)
+    print 'post order iterative:', post_order_iterative
 
 
 if __name__ == '__main__':
