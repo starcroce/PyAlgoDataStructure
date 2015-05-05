@@ -16,7 +16,31 @@ def BFS_traversal(start_vertex):
     return res
 
 
+def DFS_traversal(start_vertex):
+    res, visited = [], set()
+    DFS_traversal_helper(start_vertex, res, visited)
+    return res
+
+
+def DFS_traversal_helper(start_vertex, res, visited):
+    res.append(start_vertex)
+    visited.add(start_vertex)
+    for adj_vertex in start_vertex.adj_list:
+        if not adj_vertex in visited:
+            DFS_traversal_helper(adj_vertex, res, visited)
+
+
 def main():
+    """
+          b---d
+         /|  /|\
+        a | / | f
+         \|/  |/
+          c---e
+        ab = 4, ac = 2, bc = 1,
+        bd = 4, cd = 8, cd = 10,
+        de = 2, df = 6, ef = 3
+    """
     my_graph = MyUndirectedGraph.Graph()
     for i in range(ord('a'), ord('g')):
         my_graph.add_vertex(chr(i))
@@ -35,6 +59,9 @@ def main():
 
     bfs_traversal_res = BFS_traversal(my_graph.all_vertex['a'])
     print bfs_traversal_res
+
+    dfs_traversal_res = BFS_traversal(my_graph.all_vertex['a'])
+    print dfs_traversal_res
 
 
 if __name__ == '__main__':
