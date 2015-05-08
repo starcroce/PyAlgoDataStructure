@@ -33,7 +33,7 @@ def DFS_traversal_helper(start_vertex, res, visited):
 
 
 def dijkstra_shortest_path(graph, start_id, end_id):
-    distance, prev_vertex, unvisited_queue = {}, {}, []
+    distance, prev_vertex, unvisited_queue, visited = {}, {}, [], set()
     distance[start_id], prev_vertex[start_id] = 0, None
 
     for v_id in graph.all_vertex:
@@ -41,15 +41,19 @@ def dijkstra_shortest_path(graph, start_id, end_id):
             distance[v_id] = sys.maxint
             prev_vertex[v_id] = None
         unvisited_queue.append((distance[v_id], v_id))
+    heapq.heapify(unvisited_queue)
 
     while len(unvisited_queue) > 0:
-        heapq.heapify(unvisited_queue)
         curr_vertex = graph.all_vertex[heapq.heappop(unvisited_queue)[1]]
+        visited.add(curr_vertex.id)
         for adj_vertex in curr_vertex.adj_list:
             alt_dist = distance[curr_vertex.id] + curr_vertex.adj_list[adj_vertex]
             if alt_dist < distance[adj_vertex.id]:
                 distance[adj_vertex.id] = alt_dist
                 prev_vertex[adj_vertex.id] = curr_vertex.id
+
+        unvisited_queue = [(distance[v_id], v_id) for v_id in graph.all_vertex if not v_id in visited]
+        heapq.heapify(unvisited_queue)
 
     res, dst_id = [], end_id
     while dst_id:
