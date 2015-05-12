@@ -2,7 +2,7 @@ from collections import deque
 import heapq
 import sys
 
-import  MyUndirectedGraph
+import  MyGraph
 
 
 def BFS_traversal(start_vertex):
@@ -19,17 +19,17 @@ def BFS_traversal(start_vertex):
 
 
 def DFS_traversal(start_vertex):
+
+    def DFS_traversal_helper(start_vertex):
+        res.append(start_vertex)
+        visited.add(start_vertex)
+        for adj_vertex in start_vertex.adj_list:
+            if not adj_vertex in visited:
+                DFS_traversal_helper(adj_vertex)
+
     res, visited = [], set()
-    DFS_traversal_helper(start_vertex, res, visited)
+    DFS_traversal_helper(start_vertex)
     return res
-
-
-def DFS_traversal_helper(start_vertex, res, visited):
-    res.append(start_vertex)
-    visited.add(start_vertex)
-    for adj_vertex in start_vertex.adj_list:
-        if not adj_vertex in visited:
-            DFS_traversal_helper(adj_vertex, res, visited)
 
 
 def dijkstra_shortest_path(graph, start_id, end_id):
@@ -94,12 +94,12 @@ def kruskal_minimum_spanning_tree(graph, start_id):
             all_edges.add(edge)
     all_edges = sorted(list(all_edges))
 
-    minimum_spanning_tree = set()
+    minimum_spanning_tree = []
     for edge in all_edges:
         length, vertex_1, vertex_2 = edge[0], edge[1][0], edge[1][1]
         if find(vertex_1) != find(vertex_2):
             union(vertex_1, vertex_2)
-            minimum_spanning_tree.add(edge)
+            minimum_spanning_tree.append(edge)
     return minimum_spanning_tree
 
 
@@ -114,7 +114,7 @@ def main():
         bd = 4, cd = 8, ce = 10,
         de = 2, df = 6, ef = 3
     """
-    my_graph = MyUndirectedGraph.Graph()
+    my_graph = MyGraph.Graph()
     for i in range(ord('a'), ord('g')):
         my_graph.add_vertex(chr(i))
 
@@ -141,7 +141,7 @@ def main():
         print 'shortest path from a to ' + chr(id) + ':', shortest_path
 
     kmst = kruskal_minimum_spanning_tree(my_graph, 'a')
-    print kmst
+    print 'kruskal minimum spanning tree:', kmst
 
 
 if __name__ == '__main__':

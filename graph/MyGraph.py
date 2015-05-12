@@ -14,12 +14,14 @@ class Graph:
         new_vertex = Vertex(id)
         self.all_vertex[id] = new_vertex
 
-    def add_edge(self, id_1, id_2, edge):
+    def add_edge(self, id_1, id_2, edge, directed=False):
         vertex_1, vertex_2 = self.all_vertex[id_1], self.all_vertex[id_2]
         vertex_1.adj_list[self.all_vertex[id_2]] = edge
-        vertex_2.adj_list[self.all_vertex[id_1]] = edge
+        if directed is False:
+            vertex_2.adj_list[self.all_vertex[id_1]] = edge
 
-    def remove_edge(self, id_1, id_2):
+    def remove_edge(self, id_1, id_2, directed=False):
         vertex_1, vertex_2 = self.all_vertex[id_1], self.all_vertex[id_2]
         del vertex_1.adj_list[self.all_vertex[id_2]]
-        del vertex_2.adj_list[self.all_vertex[id_1]]
+        if directed is False:
+            del vertex_2.adj_list[self.all_vertex[id_1]]
