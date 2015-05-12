@@ -62,6 +62,47 @@ def dijkstra_shortest_path(graph, start_id, end_id):
     return res[::-1]
 
 
+def kruskal_minimum_spanning_tree(graph, start_id):
+    parent, rank = {}, {}
+
+    def make_set(vertex):
+        parent[vertex] = vertex
+        rank[vertex] = 0
+
+    def find(vertex):
+        if parent[vertex] != vertex:
+            parent[vertex] = find(parent[vertex])
+        return parent[vertex]
+
+    def union(vertex_1, vertex_2):
+        root_1, root_2 = find(vertex_1), find(vertex_2)
+        if root_1 != root_2:
+            if rank[root_1] > rank[root_2]:
+                parent[root_2] = root_1
+            else:
+                parent[root_1] = root_2
+                if rank[root_1] == rank[root_2]:
+                    rank[root_2] += 1
+
+    all_edges = set()
+    for vertex in graph.all_vertex:
+        make_set(vertex)
+        vertex = graph.all_vertex[vertex]
+        neighbors = vertex.adj_list
+        for neighbor in neighbors:
+            edge = (neighbors[neighbor], tuple(sorted([vertex.id, neighbor.id])))
+            all_edges.add(edge)
+    all_edges = sorted(list(all_edges))
+
+    minimum_spanning_tree = set()
+    for edge in all_edges:
+        length, vertex_1, vertex_2 = edge[0], edge[1][0], edge[1][1]
+        if find(vertex_1) != find(vertex_2):
+            union(vertex_1, vertex_2)
+            minimum_spanning_tree.add(edge)
+    return minimum_spanning_tree
+
+
 def main():
     """
           b---d
@@ -98,6 +139,9 @@ def main():
     for id in range(ord('b'), ord('g')):
         shortest_path = dijkstra_shortest_path(my_graph, 'a', chr(id))
         print 'shortest path from a to ' + chr(id) + ':', shortest_path
+
+    kmst = kruskal_minimum_spanning_tree(my_graph, 'a')
+    print kmst
 
 
 if __name__ == '__main__':
