@@ -9,7 +9,7 @@ def longest_common_substring_dp(s1, s2):
     for i in range(0, len(s1)):
         for j in range(0, len(s2)):
             if s1[i] == s2[j]:
-                if i == 1 or j == 1:
+                if i == 0 or j == 0:
                     lcs[i][j] = 1
                 else:
                     lcs[i][j] = lcs[i-1][j-1] + 1
