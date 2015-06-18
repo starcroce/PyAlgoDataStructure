@@ -59,8 +59,46 @@ def longest_palindrome_3(s):
     return res
 
 
+# check all possible palindrome
+# time O(n^3), space O(1)
+def get_all_palindrome_1(s):
+    res = set()
+    for i in range(len(s)):
+        for j in range(i+1, len(s)+1):
+            tmp_s = s[i:j]
+            if tmp_s == tmp_s[::-1]:
+                res.add(tmp_s)
+    return res
+
+
+# similar to lps_1, return all palindrome start and end pos
+# time O(n^2), space O(1)
+def get_all_palindrome_2(s):
+    res = set()
+    for i in range(len(s)-1):
+        pali_idx = get_all_palindrome_2_helper(s, i, i)
+        pali_idx += get_all_palindrome_2_helper(s, i, i+1)
+
+        for item in pali_idx:
+            res.add(s[item[0] : item[1]+1])
+    return res
+
+
+def get_all_palindrome_2_helper(s, pos1, pos2):
+    res = []
+    while pos1 >= 0 and pos2 < len(s) and s[pos1] == s[pos2]:
+        res.append((pos1, pos2))
+        pos1 -= 1
+        pos2 += 1
+    return res
+
+
 if __name__ == '__main__':
     s = '12212321'
+
     print longest_palindrome_1(s)
     print longest_palindrome_2(s)
     print longest_palindrome_3(s)
+
+    print get_all_palindrome_1(s)
+    print get_all_palindrome_2(s)
