@@ -38,7 +38,7 @@ def permutation_2(nums):
 
 def permutation_2_unique(nums):
     res = permutation_2(nums)
-    res = list(set([tuple(item) for item in res]))
+    res = set([tuple(item) for item in res])
     res =  [list(item) for item in res]
     return res
 
