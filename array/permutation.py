@@ -1,27 +1,29 @@
 def permutation_1(nums):
-    res, visited = [], [False for _ in range(len(nums))]
-    sol = []
-    permutation_1_helper(nums, 0, visited, sol, res)
+    res, sol = [], []
+    visited = [False for _ in range(len(nums))]
+    permutation_1_helper(nums, visited, sol, res)
     return res
 
 
-def permutation_1_helper(nums, start, visited, sol, res):
+def permutation_1_helper(nums, visited, sol, res):
+    print sol
     if len(sol) == len(nums):
         res.append(sol)
         return
 
     for i in range(len(nums)):
         if visited[i] is False:
-            sol.append(nums[i])
             visited[i] = True
-            permutation_1_helper(nums, i+1, visited, sol, res)
-            visited[i] = False
+            sol.append(nums[i])
+            permutation_1_helper(nums, visited, sol, res)
             sol = sol[:-1]
+            visited[i] = False
 
 
 # [a] -> [ba, ab] -> [cba, bca, bac, cab, acb, abc]
 # replace the res list after inserting a new char
 def permutation_2(nums):
+    # use stack to make sure that nums won't be affected during the function
     stack = list(nums)
     res = [[stack.pop()]]
     while len(stack) > 0:
@@ -34,8 +36,16 @@ def permutation_2(nums):
     return res
 
 
-if __name__ == '__main__':
-    s = [1, 2, 3, 4]
+def permutation_2_unique(nums):
+    res = permutation_2(nums)
+    res = list(set([tuple(item) for item in res]))
+    res =  [list(item) for item in res]
+    return res
 
-    print permutation_1(s)
-    print permutation_2(s)
+
+if __name__ == '__main__':
+    nums = [1, 2, 3, 3]
+
+    # print permutation_1(s)
+    print permutation_2(nums)
+    print permutation_2_unique(nums)
