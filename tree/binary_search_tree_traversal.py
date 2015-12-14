@@ -127,6 +127,14 @@ def main():
     post_order_iterative = post_order_traversal_iterative(root_node)
     print 'post order iterative:', post_order_iterative
 
+    my_bst.delete(2)
+    level_order = level_order_traversal(my_bst)
+    print 'level order:', level_order
+
+    my_bst.delete(4)
+    level_order = level_order_traversal(my_bst)
+    print 'level order:', level_order
+
 
 if __name__ == '__main__':
     main()
